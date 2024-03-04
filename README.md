@@ -38,7 +38,6 @@ Several things must be modified in the sketch. You'll want to take a look at thi
 #define WIFI_PASS "wifipassword"
 
 const uint8_t my_key[] = { 0x38, 0x35, 0x31, 0x33 }; //Unique key from BRMesh app (found using USB debugging and adb logcat)
-byte mac[] = {0x14, 0x39, 0x28, 0x32, 0xa7, 0xb0}; // find in serial console upon reset, e.g. "start ESP32 DEVICEID - AABBCCDDEEFF"  (<-that's the MAC)
 
 const int redundancy = 5;  // Repeats sending each command to the lights this many times; BLE broadcasting was flakey
 ```
@@ -64,9 +63,6 @@ const int redundancy = 5;  // Repeats sending each command to the lights this ma
 ### MQTT and Wifi Credentials
 Set you MQTT and Wifi credentials.  Nothing to really explain here. If you need to change your MQTT port, I've hardcoded that and you can find it in the code in the `mqtt.begin()` call.
 
-### Set the MAC address
-If you don't know the MAC address of your ESP32, you can flash the firmware with the incorrect MAC address, and watch in the serial monitor. Upon boot, the ESP prints its true MAC address. Fill this in the sketch and re-flash.
-
 ### Modify the number of lights
 I bought a 4-pack of these lights, and thus wrote the code for 4 lights. It can be easily modified in the sketch by changing the `numLights`, `mylights`, and `mylightnames` declarations.
 
@@ -74,12 +70,7 @@ I bought a 4-pack of these lights, and thus wrote the code for 4 lights. It can 
 I had an issue with flashing my ESP32 (I'm pretty new to Arduino IDE...maybe this is obvious), but I had to go to Tools > Partition Scheme and change it to "Huge APP (3MB...)" or I got a "sketch too large" error.
 
 
-
-
 ## Known issues
-### White temperature
-My light did not have color temperature, so I've omitted it as I could not decode the BRMesh payload for such commands without owning a compatible light. It should be possible to modify this if the payloads can be obtained.
-
 ### Incorrect States
 The ESP tries to keep track of and report the correct state of the lights to HomeAssistant, but since the lights don't communicate (only receive broadcast commands), there's no way to tell if a light received the command sent to it, or if it has been changed via another method (e.g. the BRMesh app).  Thus the state reported in Home Assistant should not be taken as absolute truth about the state of the light.
 
