@@ -8,6 +8,7 @@ This solves my problem and integrates the lights into HomeAssistant. This is fir
 - Home Assistant MQTT Broker Add-on installed in Home Assistant (https://www.youtube.com/watch?v=dqTn-Gk4Qeo&ab_channel=EverythingSmartHome)
 - Home Assistant MQTT Integration added in Home Assistant (https://www.home-assistant.io/integrations/mqtt/)
 - Arduino IDE (install library "home-assistant-integration" (Dawid Chyrzynski) in the Library Manager)
+- ESP32 Board Core v2.0.14 ** (see "Known Issues" below)
 - BRMesh app installed on Android phone
 - Android `adb` installed on computer (https://www.xda-developers.com/install-adb-windows-macos-linux)
 
@@ -77,6 +78,10 @@ I had an issue with flashing my ESP32 (I'm pretty new to Arduino IDE...maybe thi
 
 
 ## Known issues
+
+### String error (ESP board core v2.0.14)
+This breaks on newer versions of ESP board core. v2.0.14 is what I used during development. In Arduino IDE, go to Tools > Board > Board Manager; search "esp32"; downgrade to 2.0.14. If you get a new error about FQBN, try restarting the IDE, and if that doesn't work, try clearing your Arduino appdata.
+
 ### White temperature
 My light did not have color temperature, so I've omitted it as I could not decode the BRMesh payload for such commands without owning a compatible light. It should be possible to modify this if the payloads can be obtained.
 
